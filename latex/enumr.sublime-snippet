@@ -1,0 +1,9 @@
+<snippet>
+    <content><![CDATA[
+\begin{enumerate}[label*=\roman*.]
+    \item $1
+\end{enumerate}
+]]></content>
+    <tabTrigger>enumr</tabTrigger>
+    <scope>text.tex</scope>
+</snippet>

@@ -1,0 +1,8 @@
+<snippet>
+    <content>
+<![CDATA[if object_id('${1:<table name>}', 'U') is not null
+    drop table ${1:<table name>}
+]]></content>
+    <tabTrigger>droptable</tabTrigger>
+    <scope>source.sql</scope>
+</snippet>

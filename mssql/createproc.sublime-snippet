@@ -1,0 +1,67 @@
+<snippet>
+    <content>
+<![CDATA[create procedure ${1:<procedure name>}
+    @debug bit = 0
+as
+
+    set nocount on
+
+    declare @rowcount int
+    declare @tranCounter int
+
+    set @tranCounter = -1
+
+    begin try
+
+        set @tranCounter = @@trancount
+            if @tranCounter > 0
+                begin
+                    save transaction ${2:<save point name>}
+                    if @debug = 1
+                        print 'Created save point ${2:<save point name>}.'
+                end
+            else
+                begin
+                    begin transaction
+                    if @debug = 1
+                        print 'Starting transaction. Open transaction count: ' + cast(@@trancount as varchar)
+                end
+
+        if @tranCounter = 0 
+                begin
+                    commit
+                    if @debug = 1
+                        print 'Transaction committed. Transaction count: ' + cast(@@trancount as varchar)
+                end
+
+    end try
+
+    begin catch
+
+        if @tranCounter > -1
+            if @tranCounter = 0
+                rollback transaction
+            else
+                if xact_state() <> -1
+                    rollback transaction ${2:<save point name>}
+
+        declare @ErrorMessage nvarchar(4000);
+        declare @ErrorSeverity int;
+        declare @ErrorState int;
+
+        select @ErrorMessage = ERROR_MESSAGE(),
+               @ErrorSeverity = ERROR_SEVERITY(),
+               @ErrorState = ERROR_STATE();
+
+        raiserror
+        (
+            @ErrorMessage,
+            @ErrorSeverity,
+            @ErrorState
+        );
+
+    end catch
+]]></content>
+    <tabTrigger>createproc</tabTrigger>
+    <scope>source.sql</scope>
+</snippet>

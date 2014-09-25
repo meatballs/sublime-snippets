@@ -1,0 +1,8 @@
+<snippet>
+    <content>
+<![CDATA[if object_id('${1:<synonym name>}', 'SN') is not null
+    drop synonym ${1:<synonym name>}
+]]></content>
+    <tabTrigger>dropsyn</tabTrigger>
+    <scope>source.sql</scope>
+</snippet>

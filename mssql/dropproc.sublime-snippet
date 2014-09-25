@@ -1,0 +1,8 @@
+<snippet>
+    <content>
+<![CDATA[if object_id('${1:<procedure name>}', 'P') is not null
+    drop procedure ${1:<procedure name>}
+]]></content>
+    <tabTrigger>dropproc</tabTrigger>
+    <scope>source.sql</scope>
+</snippet>
